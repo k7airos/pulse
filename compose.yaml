@@ -1,0 +1,23 @@
+# Quick start:  docker compose up -d
+# The admin key is generated on first start:
+#   docker compose exec pulse cat /data/BOOTSTRAP_ADMIN_KEY.txt
+services:
+  pulse:
+    build: .
+    image: pulse:latest
+    restart: unless-stopped
+    ports:
+      # Loopback only: put a reverse proxy with HTTPS (Caddy, nginx, …) in front.
+      - "127.0.0.1:4592:3000"
+    environment:
+      # Set to 1 when the proxy sets X-Forwarded-For / X-Real-IP, so rate limiting sees real client IPs.
+      PULSE_TRUST_PROXY: "${PULSE_TRUST_PROXY:-0}"
+      # Optional fixed admin key for the first start (>= 24 chars). Otherwise one is generated.
+      PULSE_BOOTSTRAP_ADMIN_KEY: "${PULSE_BOOTSTRAP_ADMIN_KEY:-}"
+      # Delete raw events older than N days (0 = keep forever; per-site setting overrides).
+      PULSE_RETENTION_DAYS: "${PULSE_RETENTION_DAYS:-0}"
+    volumes:
+      - pulse-data:/data
+
+volumes:
+  pulse-data:

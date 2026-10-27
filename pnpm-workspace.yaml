@@ -1,0 +1,10 @@
+# pnpm 10 reads onlyBuiltDependencies; pnpm 11 reads allowBuilds. Keep both (and the copy in package.json used by Docker builds).
+onlyBuiltDependencies:
+  - better-sqlite3
+  - esbuild
+allowBuilds:
+  better-sqlite3: true
+  esbuild: true
+  vue-demi: false
+overrides:
+  esbuild@>=0.27.3 <0.28.1: ">=0.28.1"

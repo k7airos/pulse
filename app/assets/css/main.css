@@ -1,0 +1,147 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+@import "@akairos/design/family.css";
+@import "@akairos/design/tailwind.css";
+
+/* Nuxt UI 与手写控件共用同一组字体与过渡 */
+@theme inline {
+  --font-sans: var(--family-font-body);
+  --font-mono: var(--family-font-mono);
+  --default-transition-duration: var(--family-duration-fast);
+  --default-transition-timing-function: var(--family-ease-out);
+}
+
+/*
+ * 工作台适配层（compact）：中性黑白灰底，强调色保持设计包的品牌紫。
+ * 深色必须用 html.dark 才能压过包内选择器。
+ */
+:root {
+  --family-bg: #fafafa;
+  --family-surface: #ffffff;
+  --family-surface-raised: #f5f5f5;
+  --family-text: #171717;
+  --family-text-secondary: #404040;
+  --family-text-muted: #6b6b6b;
+  --family-border: #e5e5e5;
+  --family-radius-control: 6px;
+  --family-radius-surface: 8px;
+  --family-radius-panel: 8px;
+  --family-font-display: var(--family-font-body);
+  --family-shadow-small: none;
+  --family-shadow-panel: 0 8px 24px rgb(0 0 0 / 0.08);
+  --pulse-up: #15803d;
+  --pulse-down: #b91c1c;
+}
+
+html.dark {
+  --family-bg: #0a0a0a;
+  --family-surface: #111111;
+  --family-surface-raised: #1c1c1c;
+  --family-border: #333333;
+  --family-text: #ededed;
+  --family-text-secondary: #c4c4c4;
+  --family-text-muted: #a3a3a3;
+  --family-shadow-panel: 0 8px 24px rgb(0 0 0 / 0.24);
+  --pulse-up: #4ade80;
+  --pulse-down: #f87171;
+}
+
+/* Nuxt UI 语义色 → 设计令牌（:root 与 html.dark 同级，后写者胜） */
+:root,
+html.dark {
+  --ui-radius: var(--family-radius-small);
+  --ui-bg: var(--family-surface);
+  --ui-bg-muted: var(--family-bg);
+  --ui-bg-elevated: var(--family-surface-raised);
+  --ui-bg-accented: var(--family-surface-raised);
+  --ui-border: var(--family-border);
+  --ui-border-muted: var(--family-border);
+  --ui-border-accented: var(--family-border);
+  --ui-text: var(--family-text-secondary);
+  --ui-text-toned: var(--family-text-secondary);
+  --ui-text-muted: var(--family-text-muted);
+  --ui-text-dimmed: var(--family-text-muted);
+  --ui-text-highlighted: var(--family-text);
+}
+
+html,
+body {
+  background: var(--family-bg);
+  color: var(--family-text-secondary);
+  font-family: var(--family-font-body);
+  font-size: 13px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 数字一律等宽对齐，表格里不跳动 */
+.num {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum";
+}
+
+.font-mono-tight {
+  font-family: var(--family-font-mono);
+  font-size: 0.92em;
+}
+
+/* 紧凑数据表：行高 40px，表头吸顶 */
+.dt {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.dt th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: var(--family-surface);
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--family-border);
+  color: var(--family-text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.dt th:first-child,
+.dt td:first-child {
+  text-align: left;
+}
+
+.dt td {
+  height: 40px;
+  padding: 0 12px;
+  border-bottom: 1px solid color-mix(in srgb, var(--family-border) 60%, transparent);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.dt tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.dt tbody tr.row-link {
+  cursor: pointer;
+}
+
+.dt tbody tr.row-link:hover td {
+  background: var(--family-surface-raised);
+}
+
+.th-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.th-sort:hover,
+th[aria-sort="ascending"] .th-sort,
+th[aria-sort="descending"] .th-sort {
+  color: var(--family-text);
+}
